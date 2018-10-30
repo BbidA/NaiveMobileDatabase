@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.BasicChargeMapper">
+    <select id="getCurrentCharge" resultType="BasicCharge">
+        select id,
+               local_data_charge    as localDataCharge,
+               domestic_data_charge as domesticDataCharge,
+               call_charge          as callCharge,
+               message_charge       as messageCharge,
+               effective_time       as effectiveTime
+        from basic_charge
+        order by effective_time desc
+        limit 1;
+    </select>
+
+    <insert id="add" parameterType="BasicCharge" useGeneratedKeys="true">
+        insert into basic_charge (local_data_charge, domestic_data_charge, call_charge, message_charge, effective_time)
+        value (#{localDataCharge}, #{domesticDataCharge}, #{callCharge}, #{messageCharge}, #{effectiveCharge});
+    </insert>
+</mapper>

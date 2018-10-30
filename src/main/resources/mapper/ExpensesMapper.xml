@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ExpensesMapper">
+
+    <resultMap id="dataExpensesMap" type="entity.DataExpense">
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="type" column="type"/>
+        <result property="dataConsumption" column="consumption"/>
+        <result property="expense" column="expense"/>
+    </resultMap>
+
+    <resultMap id="callExpenseMap" type="entity.CallExpense">
+        <result property="startTime" column="start_time"/>
+        <result property="duration" column="duration"/>
+        <result property="expense" column="expense"/>
+    </resultMap>
+
+    <select id="getCallExpensesInRecentMonths" resultMap="callExpenseMap">
+        select *
+        from call_record
+        where user_phone = #{userPhone}
+          and start_time between DATE_SUB(now(), INTERVAL #{months} MONTH) and NOW()
+        order by start_time desc;
+    </select>
+
+    <select id="getDataExpensesInRecentMonths" resultMap="dataExpensesMap">
+        select *
+        from data_usage_record
+        where user_phone = #{userPhone}
+          and start_time between DATE_SUB(now(), INTERVAL #{months} MONTH) and NOW()
+        order by start_time desc;
+    </select>
+</mapper>

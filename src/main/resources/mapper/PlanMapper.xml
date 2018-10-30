@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.PlanMapper">
+
+    <resultMap id="planResultMap" type="Plan">
+        <result property="id" column="id"/>
+        <result property="expense" column="expense"/>
+        <result property="callMinutes" column="call_minutes"/>
+        <result property="messages" column="messages"/>
+        <result property="localData" column="local_data"/>
+        <result property="domesticData" column="domestic_data"/>
+    </resultMap>
+
+    <select id="getAllPlans" resultMap="planResultMap">
+        select *
+        from package;
+    </select>
+
+    <select id="getPlan" resultMap="planResultMap">
+        select *
+        from package
+        where id = #{planId};
+    </select>
+
+    <select id="findEffectivePlans" resultMap="planResultMap">
+        select p.*
+        from package p,
+             package_orders o
+        where p.id = o.package_id
+          and o.user_phone = #{phoneNumber}
+          and (o.state = 'effective' or o.state = 'waiting_out')
+        order by order_time asc
+    </select>
+</mapper>

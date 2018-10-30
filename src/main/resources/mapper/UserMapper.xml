@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.UserMapper">
+    <insert id="save" parameterType="entity.User">
+        insert into user (phone_number, call_minutes, messages, local_data, domestic_data, balance)
+        value (#{phoneNumber}, #{callMinutes}, #{messages}, #{localData}, #{doemesticData}, #{balance})
+    </insert>
+
+    <resultMap id="userMap" type="entity.User">
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="callMinutes" column="call_minutes"/>
+        <result property="messages" column="messages"/>
+        <result property="localData" column="local_data"/>
+        <result property="domesticData" column="domestic_data"/>
+        <result property="balance" column="balance"/>
+        <result property="outPlanCall" column="out_call"/>
+        <result property="outPlanLocalData" column="out_local_data"/>
+        <result property="outPlanMessages" column="out_messages"/>
+        <result property="outPlanDomesticData" column="out_domestic_data"/>
+    </resultMap>
+
+    <select id="getByPhoneNumber" resultMap="userMap">
+        select *
+        from user
+        where phone_number = #{phoneNumber};
+    </select>
+
+    <update id="update" parameterType="User">
+        update user
+        set call_minutes = #{callMinutes},
+            messages = #{messages},
+            local_data = #{localData},
+            domestic_data = #{domesticData},
+            balance = #{balance},
+            out_call = #{outPlanCall},
+            out_messages = #{outPlanMessages},
+            out_local_data= #{outPlanLocalData},
+            out_domestic_data = #{outPlanDomesticData}
+        where phone_number = #{phoneNumber};
+    </update>
+
+
+</mapper>
