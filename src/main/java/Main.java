@@ -27,6 +27,7 @@ public class Main {
     /**
      * 测试前请修改resources文件夹中的 mybatis-config 配置文件，将 url,
      * username, password 修改成本地的 url, username, password
+     * 项目使用 java 11 编写，请使用 java 11 编译器进行编译
      */
     public static void main(String[] args) {
         Instant start = Instant.now();
